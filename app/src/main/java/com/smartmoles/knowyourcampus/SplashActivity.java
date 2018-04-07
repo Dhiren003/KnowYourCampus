@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
                 if(!Prefs.with(SplashActivity.this).readBoolean("firstboot",false)) {
                     startActivity(new Intent(SplashActivity.this, IntroActivity.class));
                 } else {
-                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    startActivity(new Intent(SplashActivity.this, SelectionActivity.class));
                 }
                 finish();
             }

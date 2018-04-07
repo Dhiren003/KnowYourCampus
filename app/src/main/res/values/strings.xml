@@ -4,4 +4,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="made_by">Made By Team Smart Moles</string>
+    <string-array name="department">
+        <item>Computer Engineering</item>
+        <item>Mechanical Engineering</item>
+        <item>Civil Engineering</item>
+        <item>Electrical Engineering</item>
+        <item>Chemical Engineering</item>
+    </string-array>
 </resources>

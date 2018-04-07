@@ -3,7 +3,13 @@ package com.smartmoles.knowyourcampus;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
     SecurePrefs pref;
@@ -11,22 +17,59 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
         pref = new SecurePrefs(this);
         String ename = Config.eKey;
-        String pass = Config.pKey;
-        if(!pref.getString(ename).isEmpty() && !pref.getString(pass).isEmpty()){
+        final String pass = Config.pKey;
+        if(pref.getString(ename) != null && pref.getString(pass) != null){
             Intent go = new Intent(LoginActivity.this, MainActivity.class);
             go.putExtra(ename,pref.getString(ename));
             go.putExtra(pass,pref.getString(pass));
             startActivity(go);
             finish();
         } else {
-            EditText en_no = (EditText) findViewById(R.id.en_no);
-            EditText name = (EditText) findViewById(R.id.name);
-            EditText email = (EditText) findViewById(R.id.email);
-            EditText password = (EditText) findViewById(R.id.password);
-            EditText contact = (EditText) findViewById(R.id.contact);
+            setContentView(R.layout.activity_selection);
+            Button student = (Button) findViewById(R.id.stu);
+            student.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    passLogin(false);
+                }
+            });
+            Button faculty = (Button) findViewById(R.id.fac);
+            faculty.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    passLogin(true);
+                }
+            });
         }
+    }
+
+    void passLogin(final boolean isFact){
+        setContentView(R.layout.activity_login);
+        EditText er_no = (EditText) findViewById(R.id.en_no);
+        if(isFact) {
+            er_no.setHint("Faculty ID");
+        }
+        EditText password = (EditText) findViewById(R.id.pass);
+        TextView forgot = (TextView) findViewById(R.id.forgotpass);
+
+        Button login = (Button) findViewById(R.id.btnlog);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this, "Login Data Sent", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button reg = (Button) findViewById(R.id.btnreg);
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent regist = new Intent(LoginActivity.this, RegistrationActivity.class);
+                regist.putExtra(Config.isFac,isFact);
+                startActivity(regist);
+            }
+        });
     }
 }
