@@ -1,9 +1,12 @@
 package com.smartmoles.knowyourcampus;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity
                 final Intent intent2 = new Intent("android.intent.action.SEND");
                 intent2.setType("message/rfc822");
                 intent2.putExtra("android.intent.extra.EMAIL", new String[]{"patel.kuldip91@gmail.com"});
-                intent2.putExtra("android.intent.extra.SUBJECT", "Know_Your_Campus" + BuildConfig.VERSION_NAME);
+                intent2.putExtra("android.intent.extra.SUBJECT", "Know Your Campus" + BuildConfig.VERSION_NAME);
                 intent2.putExtra("android.intent.extra.TEXT", "");
                 try {
                     startActivity(Intent.createChooser(intent2, "Report..."));
@@ -58,35 +61,27 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            alertDialogBuilder.setTitle("Exit");
+            alertDialogBuilder
+                    .setMessage("Do you really want to exit?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            MainActivity.this.finish();
+                        }
+                    })
+                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            dialog.cancel();
+                        }
+                    }).show();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -96,12 +91,31 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_share) {
+            final String string = "Hey have you ever experienced in your college that you got left for an event as you werent notified?Then download this app KnowYourCampus.";
+            final Intent intent3 = new Intent("android.intent.action.SEND");
+            intent3.setType("text/plain");
+            intent3.putExtra("android.intent.extra.SUBJECT", "KYC");
+            intent3.putExtra("android.intent.extra.TEXT", string);
+            startActivity(Intent.createChooser(intent3, "Share"));
+        } else if (id == R.id.nav_feedback) {
 
-        } else if (id == R.id.nav_send) {
-
+        } else if(id == R.id.nav_exit) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            alertDialogBuilder.setTitle("Exit");
+            alertDialogBuilder
+                    .setMessage("Do you really want to exit?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            MainActivity.this.finish();
+                        }
+                    })
+                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            dialog.cancel();
+                        }
+                    }).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
