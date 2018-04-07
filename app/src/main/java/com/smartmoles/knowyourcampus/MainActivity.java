@@ -1,5 +1,6 @@
 package com.smartmoles.knowyourcampus;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,8 +29,16 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                final Intent intent2 = new Intent("android.intent.action.SEND");
+                intent2.setType("message/rfc822");
+                intent2.putExtra("android.intent.extra.EMAIL", new String[]{"patel.kuldip91@gmail.com"});
+                intent2.putExtra("android.intent.extra.SUBJECT", "Know_Your_Campus" + BuildConfig.VERSION_NAME);
+                intent2.putExtra("android.intent.extra.TEXT", "");
+                try {
+                    startActivity(Intent.createChooser(intent2, "Report..."));
+                } catch (Exception ex) {
+                    Toast.makeText(MainActivity.this, "Can't find email client.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
