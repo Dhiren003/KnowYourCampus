@@ -17,7 +17,7 @@ public class IntroActivity extends AppIntro2 {
         SliderPage sliderPage1 = new SliderPage();
         sliderPage1.setTitle("Welcome!");
         sliderPage1.setDescription("This is " + getString(R.string.app_name));
-        sliderPage1.setImageDrawable(R.drawable.ic_launcher_round);
+        sliderPage1.setImageDrawable(R.drawable.ic_launcher_web);
         sliderPage1.setBgColor(getResources().getColor(R.color.card_bg));
         addSlide(AppIntroFragment.newInstance(sliderPage1));
 
