@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    SecurePrefs pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,11 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        pref = new SecurePrefs(this);
+        String eno = getIntent().getStringExtra(Config.eKey);
+        if(eno != null){
+            Toast.makeText(this,eno,Toast.LENGTH_SHORT).show();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +106,25 @@ public class MainActivity extends AppCompatActivity
             startActivity(Intent.createChooser(intent3, "Share"));
         } else if (id == R.id.nav_feedback) {
 
+        } else if(id == R.id.nav_logout) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            alertDialogBuilder.setTitle("LogOut");
+            alertDialogBuilder
+                    .setMessage("Do you really want to Logout?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            pref.remove(Config.eKey);
+                            pref.remove(Config.pKey);
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            dialog.cancel();
+                        }
+                    }).show();
         } else if(id == R.id.nav_exit) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
             alertDialogBuilder.setTitle("Exit");

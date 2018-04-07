@@ -17,9 +17,9 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardBackgroundColor="#BEBBBB"
-        card_view:cardCornerRadius="6dp">
+        card_view:cardBackgroundColor="@android:color/darker_gray"
+        card_view:cardCornerRadius="6dp"
+        card_view:cardUseCompatPadding="true">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -41,10 +41,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
+                    android:backgroundTint="#FF0000"
                     android:ems="10"
                     android:hint="Enrollment No"
                     android:inputType="number"
-                    android:backgroundTint="#FF0000"
                     android:textColorHint="@android:color/white" />
 
                 <EditText
@@ -52,10 +52,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:backgroundTint="#FF0000"
                     android:ems="10"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    android:backgroundTint="#FF0000"
                     android:textColorHint="@android:color/white" />
 
                 <TextView
@@ -64,10 +64,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginTop="5dp"
+                    android:clickable="true"
                     android:linksClickable="true"
                     android:text="Forgot Password..?"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#FFF" />
+                    android:textColor="#FFFFFF" />
             </LinearLayout>
 
             <LinearLayout

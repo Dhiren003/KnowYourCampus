@@ -48,11 +48,11 @@ public class LoginActivity extends AppCompatActivity {
 
     void passLogin(final boolean isFact){
         setContentView(R.layout.activity_login);
-        EditText er_no = (EditText) findViewById(R.id.en_no);
+        final EditText er_no = (EditText) findViewById(R.id.en_no);
         if(isFact) {
             er_no.setHint("Faculty ID");
         }
-        EditText password = (EditText) findViewById(R.id.pass);
+        final EditText password = (EditText) findViewById(R.id.pass);
         TextView forgot = (TextView) findViewById(R.id.forgotpass);
         forgot.setClickable(true);
         forgot.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +66,18 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "Login Data Sent", Toast.LENGTH_SHORT).show();
+                if(!er_no.getText().toString().isEmpty() && !password.getText().toString().isEmpty()){
+                    pref.putString(Config.eKey, er_no.getText().toString());
+                    pref.putString(Config.pKey, password.getText().toString());
+                    Toast.makeText(LoginActivity.this, "Login Data Sent", Toast.LENGTH_SHORT).show();
+                    Intent go = new Intent(LoginActivity.this, MainActivity.class);
+                    go.putExtra(Config.eKey,er_no.getText().toString());
+                    go.putExtra(Config.pKey,password.getText().toString());
+                    startActivity(go);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Fill Both Fields", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

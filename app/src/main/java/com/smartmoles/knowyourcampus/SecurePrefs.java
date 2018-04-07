@@ -68,6 +68,12 @@ class SecurePrefs {
         return preferences.contains(toKey(key));
     }
 
+    void remove(String key){
+        if (preferences.contains(toKey(key))) {
+            preferences.edit().remove(toKey(key)).apply();
+        }
+    }
+
     String getString(String key) {
         if (preferences.contains(toKey(key))) {
             String securedEncodedValue = preferences.getString(toKey(key), "");

@@ -24,6 +24,10 @@
         android:icon="@drawable/ic_menu_send"
         android:title="FeedBack" />
     <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/logout"
+        android:title="LogOut" />
+    <item
         android:id="@+id/nav_exit"
         android:icon="@drawable/close"
         android:title="Exit" />
