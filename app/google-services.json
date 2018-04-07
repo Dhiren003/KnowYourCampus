@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "81937022241",
+    "firebase_url": "https://knowyourcampus-62f66.firebaseio.com",
+    "project_id": "knowyourcampus-62f66",
+    "storage_bucket": "knowyourcampus-62f66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81937022241:android:c3598613e3223ab8",
+        "android_client_info": {
+          "package_name": "com.smartmoles.knowyourcampus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81937022241-usfs7uavjlf7gfeklnth7sjhsmkvlv5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smartmoles.knowyourcampus",
+            "certificate_hash": "a168477a4ee0906d7bee76c644d217081e6b6e5b"
+          }
+        },
+        {
+          "client_id": "81937022241-t5vena9b4pncss56mc6n84f92lne42ud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf4CkP_DOCBURiPCWx2IEoPZgTSbIsgH0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81937022241-t5vena9b4pncss56mc6n84f92lne42ud.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
