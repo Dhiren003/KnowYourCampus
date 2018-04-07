@@ -52,7 +52,7 @@ public class IntroActivity extends AppIntro2 {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         Prefs.with(this).writeBoolean("firstboot",true);
-        startActivity(new Intent(this, SelectionActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 }

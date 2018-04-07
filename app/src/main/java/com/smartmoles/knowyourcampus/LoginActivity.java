@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +16,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         pref = new SecurePrefs(this);
         String ename = Config.eKey;
         final String pass = Config.pKey;
@@ -53,6 +54,13 @@ public class LoginActivity extends AppCompatActivity {
         }
         EditText password = (EditText) findViewById(R.id.pass);
         TextView forgot = (TextView) findViewById(R.id.forgotpass);
+        forgot.setClickable(true);
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgotPass.class));
+            }
+        });
 
         Button login = (Button) findViewById(R.id.btnlog);
         login.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent regist = new Intent(LoginActivity.this, RegistrationActivity.class);
-                regist.putExtra(Config.isFac,isFact);
+                regist.putExtra(Config.isFact,isFact);
                 startActivity(regist);
             }
         });

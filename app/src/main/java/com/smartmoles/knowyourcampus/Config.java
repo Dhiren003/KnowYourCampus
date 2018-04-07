@@ -4,5 +4,5 @@ public class Config {
     static final String
             eKey = "Email",
             pKey = "Psw",
-            isFac = "isFac";
+            isFact = "isFact";
 }
