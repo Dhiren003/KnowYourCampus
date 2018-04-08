@@ -27,11 +27,12 @@ public class LoginActivity extends AppCompatActivity {
         pref = new SecurePrefs(this);
         String ename = Config.eKey;
         final String pass = Config.pKey;
+        String name = Config.pName;
         if(pref.getString(ename) != null && pref.getString(pass) != null && pref.getString(Config.pName) != null && Prefs.with(this).readBoolean(Config.isLogged,false)){
             Intent go = new Intent(LoginActivity.this, MainActivity.class);
             go.putExtra(ename,pref.getString(ename));
             go.putExtra(pass,pref.getString(pass));
-            go.putExtra(Config.pName,pref.getString(Config.pName));
+            go.putExtra(name,pref.getString(name));
             startActivity(go);
             finish();
         } else {
@@ -141,13 +142,14 @@ public class LoginActivity extends AppCompatActivity {
                     pref.remove(Config.eKey);
                     pref.remove(Config.pKey);
                     pref.remove(Config.pName);
+                    Prefs.with(ctx).remove(Config.isLogged);
                     Toast.makeText(ctx,"Wrong Data Entered", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent go = new Intent(ctx, MainActivity.class);
                     Prefs.with(ctx).writeBoolean(Config.isLogged,true);
                     go.putExtra(Config.eKey, pref.getString(Config.eKey));
                     go.putExtra(Config.pKey, pref.getString(Config.pKey));
-                    go.putExtra(Config.pName,s);
+                    go.putExtra(Config.pName,s.trim());
                     startActivity(go);
                     finish();
                 }

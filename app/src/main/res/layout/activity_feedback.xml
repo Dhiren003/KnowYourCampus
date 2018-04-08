@@ -41,17 +41,6 @@
                             android:text="Feedback Us..🙏" />
 
                         <EditText
-                            android:id="@+id/en_no"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:layout_marginTop="10dp"
-                            android:hint="Enrollment No"
-                            android:inputType="number"
-                            android:backgroundTint="#FF0000"
-                            android:textColorHint="@android:color/white" />
-
-                        <EditText
                             android:id="@+id/contact"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -83,7 +72,7 @@
                             android:id="@+id/feedback"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="10dp"
                             android:backgroundTint="#FF0000"
                             android:ems="10"
                             android:hint="Feedback"

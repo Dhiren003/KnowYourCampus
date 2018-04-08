@@ -40,9 +40,11 @@ public class Feedback extends AppCompatActivity {
     private class FeedGo extends AsyncTask<String,Void,String> {
         private Context ctx;
         private ProgressDialog progress;
+        private SecurePrefs prefs;
 
         FeedGo(Context context){
             ctx = context;
+            prefs = new SecurePrefs(ctx);
         }
 
         @Override
@@ -60,7 +62,7 @@ public class Feedback extends AppCompatActivity {
             }
             HttpRequest request;
             try {
-                request = HttpRequest.get(Config.feedbhost, true, "en_no",strings[0],"contact_no",strings[1],"email",strings[2],"feedback",strings[3])
+                request = HttpRequest.get(Config.feedbhost, true, "en_no",prefs.getString(Config.eKey),"contact_no",strings[1],"email",strings[2],"feedback",strings[3])
                         .followRedirects(true).connectTimeout(6000);
             } catch (HttpRequest.HttpRequestException e) {
                 return "?";

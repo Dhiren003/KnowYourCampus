@@ -88,7 +88,7 @@ public class RegistrationActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             progress.dismiss();
             if(s.equals("?") || s.equals("!")){
-                Toast.makeText(RegistrationActivity.this,"Error To Write Data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrationActivity.this,"Error To Connection", Toast.LENGTH_SHORT).show();
             } else {
                 if(s.contains("Already")){
                     Toast.makeText(RegistrationActivity.this,"You Already Registered!", Toast.LENGTH_SHORT).show();
