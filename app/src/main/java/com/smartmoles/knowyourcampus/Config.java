@@ -7,7 +7,7 @@ public class Config {
             pName = "Name",
             isFact = "isFact",
             isLogged = "isLogged",
-            reghost = "http://172.23.0.87/AS/register.php",
-            loginhost = "http://172.23.0.87/AS/login.php",
-            feedbhost = "http://172.23.0.87/AS/feedback.php";
+            reghost = "http://172.23.0.87/kyc/Admin/api/register.php",
+            loginhost = "http://172.23.0.87/kyc/Admin/api/login.php",
+            feedbhost = "http://172.23.0.87/kyc/Admin/api/feedback.php";
 }

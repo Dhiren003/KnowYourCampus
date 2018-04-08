@@ -6,12 +6,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
+            android:icon="@drawable/notification"
             android:title="College Notifications" />
         <item
             android:id="@+id/nav_gallery"
+            android:icon="@drawable/notice"
             android:title="Department Notice" />
         <item
             android:id="@+id/nav_slideshow"
+            android:icon="@drawable/marks"
             android:title="Mid-Sem Exam Marks" />
     </group>
 
