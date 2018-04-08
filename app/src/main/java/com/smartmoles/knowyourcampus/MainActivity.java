@@ -21,6 +21,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SecurePrefs pref;
+    String eno,uname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +30,9 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         pref = new SecurePrefs(this);
-        String eno = getIntent().getStringExtra(Config.eKey);
-        if(eno != null){
-            Toast.makeText(this,eno,Toast.LENGTH_SHORT).show();
-        }
+
+        eno = getIntent().getStringExtra(Config.eKey);
+        uname = getIntent().getStringExtra(Config.pName);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        setupNavigationHeader(navigationView);
     }
 
     @Override
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity
                         public void onClick(DialogInterface dialog,int id) {
                             pref.remove(Config.eKey);
                             pref.remove(Config.pKey);
+                            Prefs.with(MainActivity.this).remove(Config.isLogged);
                             startActivity(new Intent(MainActivity.this, LoginActivity.class));
                             finish();
                         }
@@ -146,5 +148,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void setupNavigationHeader(NavigationView mNavigationView) {
+        View headerView = mNavigationView.getHeaderView(0);
+        android.widget.TextView tv = (android.widget.TextView) headerView.findViewById(R.id.tv);
+        android.widget.TextView pen = (android.widget.TextView) headerView.findViewById(R.id.pen);
+        try {
+            tv.setText(uname);
+            pen.setText(eno);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

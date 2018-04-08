@@ -90,18 +90,13 @@ public class RegistrationActivity extends AppCompatActivity {
             if(s.equals("?") || s.equals("!")){
                 Toast.makeText(RegistrationActivity.this,"Error To Write Data", Toast.LENGTH_SHORT).show();
             } else {
-                switch (s){
-                    case "Already":
-                        Toast.makeText(RegistrationActivity.this,"You Already Registered!", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Done":
-                        Toast.makeText(RegistrationActivity.this,"Registration Successfully", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Failed":
-                        Toast.makeText(RegistrationActivity.this,"Wrong Data Entered", Toast.LENGTH_SHORT).show();
-                        break;
+                if(s.contains("Already")){
+                    Toast.makeText(RegistrationActivity.this,"You Already Registered!", Toast.LENGTH_SHORT).show();
+                } else if(s.contains("Done")){
+                    Toast.makeText(RegistrationActivity.this,"Registration Successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RegistrationActivity.this,"Wrong Data Entered", Toast.LENGTH_SHORT).show();
                 }
-                onBackPressed();
             }
         }
 

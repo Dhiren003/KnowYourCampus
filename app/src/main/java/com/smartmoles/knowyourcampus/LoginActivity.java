@@ -27,10 +27,11 @@ public class LoginActivity extends AppCompatActivity {
         pref = new SecurePrefs(this);
         String ename = Config.eKey;
         final String pass = Config.pKey;
-        if(pref.getString(ename) != null && pref.getString(pass) != null && Prefs.with(this).readBoolean(Config.isLogged,false)){
+        if(pref.getString(ename) != null && pref.getString(pass) != null && pref.getString(Config.pName) != null && Prefs.with(this).readBoolean(Config.isLogged,false)){
             Intent go = new Intent(LoginActivity.this, MainActivity.class);
             go.putExtra(ename,pref.getString(ename));
             go.putExtra(pass,pref.getString(pass));
+            go.putExtra(Config.pName,pref.getString(Config.pName));
             startActivity(go);
             finish();
         } else {
@@ -118,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
             HttpRequest request;
             try {
                 progress.setMessage("Logging...");
-                request = HttpRequest.get(Config.reghost, true, "is_fact",isFaculty ? "1" : "0",(isFaculty) ? "fac_id" : "en_no",strings[0],"password",strings[1])
+                request = HttpRequest.get(Config.loginhost, true, "is_fact",isFaculty ? "1" : "0",(isFaculty) ? "fac_id" : "en_no",strings[0],"password",strings[1])
                         .followRedirects(true).connectTimeout(6000);
             } catch (HttpRequest.HttpRequestException e) {
                 return "?";
@@ -132,20 +133,23 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             progress.dismiss();
+            Toast.makeText(LoginActivity.this,s, Toast.LENGTH_SHORT).show();
             if(s.equals("?") || s.equals("!")){
                 Toast.makeText(LoginActivity.this,"Error To Write Data", Toast.LENGTH_SHORT).show();
             } else {
-                if(s.equals("Done")) {
-                    Intent go = new Intent(LoginActivity.this, MainActivity.class);
-                    go.putExtra(Config.eKey, pref.getString(Config.eKey));
-                    go.putExtra(Config.pKey, pref.getString(Config.pKey));
-                    Prefs.with(LoginActivity.this).writeBoolean(Config.isLogged,true);
-                    startActivity(go);
-                    finish();
-                } else {
+                if(s.contains("Failed")) {
                     pref.remove(Config.eKey);
                     pref.remove(Config.pKey);
-                    Toast.makeText(LoginActivity.this,"Wrong Data Entered", Toast.LENGTH_SHORT).show();
+                    pref.remove(Config.pName);
+                    Toast.makeText(ctx,"Wrong Data Entered", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent go = new Intent(ctx, MainActivity.class);
+                    Prefs.with(ctx).writeBoolean(Config.isLogged,true);
+                    go.putExtra(Config.eKey, pref.getString(Config.eKey));
+                    go.putExtra(Config.pKey, pref.getString(Config.pKey));
+                    go.putExtra(Config.pName,s);
+                    startActivity(go);
+                    finish();
                 }
             }
         }
