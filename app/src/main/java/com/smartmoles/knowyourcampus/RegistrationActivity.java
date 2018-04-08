@@ -50,7 +50,7 @@ public class RegistrationActivity extends AppCompatActivity {
         });
     }
 
-    class Register extends AsyncTask<String,Void,String>{
+    private class Register extends AsyncTask<String,Void,String>{
         private Context ctx;
         private ProgressDialog progress;
 
@@ -61,7 +61,7 @@ public class RegistrationActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progress = new ProgressDialog(ctx);
-            progress.setMessage("Connecting...");
+            progress.setMessage("Registering...");
             progress.setCancelable(false);
             progress.show();
         }
@@ -73,7 +73,6 @@ public class RegistrationActivity extends AppCompatActivity {
             }
             HttpRequest request;
             try {
-                progress.setMessage("Logging...");
                 request = HttpRequest.get(Config.reghost, true, "is_fact",isFaculty ? "1" : "0",(isFaculty) ? "fac_id" : "en_no",strings[0],"name",strings[1],"email",strings[2],"password",strings[3],(isFaculty) ? "dept_id" : "dept",strings[4],"contact_no",strings[5],"gender",strings[6])
                         .followRedirects(true).connectTimeout(6000);
             } catch (HttpRequest.HttpRequestException e) {
@@ -91,7 +90,17 @@ public class RegistrationActivity extends AppCompatActivity {
             if(s.equals("?") || s.equals("!")){
                 Toast.makeText(RegistrationActivity.this,"Error To Write Data", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(RegistrationActivity.this,s, Toast.LENGTH_SHORT).show();
+                switch (s){
+                    case "Already":
+                        Toast.makeText(RegistrationActivity.this,"You Already Registered!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Done":
+                        Toast.makeText(RegistrationActivity.this,"Registration Successfully", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Failed":
+                        Toast.makeText(RegistrationActivity.this,"Wrong Data Entered", Toast.LENGTH_SHORT).show();
+                        break;
+                }
                 onBackPressed();
             }
         }

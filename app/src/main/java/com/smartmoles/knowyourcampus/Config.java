@@ -5,6 +5,7 @@ public class Config {
             eKey = "Email",
             pKey = "Psw",
             isFact = "isFact",
+            isLogged = "isLogged",
             reghost = "http://172.23.0.87/AS/register.php",
             loginhost = "http://172.23.0.87/AS/login.php";
 }

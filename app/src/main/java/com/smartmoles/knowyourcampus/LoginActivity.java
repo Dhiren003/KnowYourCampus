@@ -1,6 +1,11 @@
 package com.smartmoles.knowyourcampus;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +17,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
     SecurePrefs pref;
+    boolean isFaculty = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         pref = new SecurePrefs(this);
         String ename = Config.eKey;
         final String pass = Config.pKey;
-        if(pref.getString(ename) != null && pref.getString(pass) != null){
+        if(pref.getString(ename) != null && pref.getString(pass) != null && Prefs.with(this).readBoolean(Config.isLogged,false)){
             Intent go = new Intent(LoginActivity.this, MainActivity.class);
             go.putExtra(ename,pref.getString(ename));
             go.putExtra(pass,pref.getString(pass));
@@ -41,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     passLogin(true);
+                    isFaculty = true;
                 }
             });
         }
@@ -69,12 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(!er_no.getText().toString().isEmpty() && !password.getText().toString().isEmpty()){
                     pref.putString(Config.eKey, er_no.getText().toString());
                     pref.putString(Config.pKey, password.getText().toString());
-                    Toast.makeText(LoginActivity.this, "Login Data Sent", Toast.LENGTH_SHORT).show();
-                    Intent go = new Intent(LoginActivity.this, MainActivity.class);
-                    go.putExtra(Config.eKey,er_no.getText().toString());
-                    go.putExtra(Config.pKey,password.getText().toString());
-                    startActivity(go);
-                    finish();
+                    new Login(LoginActivity.this).execute(er_no.getText().toString(),password.getText().toString());
                 } else {
                     Toast.makeText(LoginActivity.this, "Fill Both Fields", Toast.LENGTH_SHORT).show();
                 }
@@ -90,5 +92,68 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(regist);
             }
         });
+    }
+
+    private class Login extends AsyncTask<String,Void,String> {
+        private Context ctx;
+        private ProgressDialog progress;
+
+        Login(Context context){
+            ctx = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progress = new ProgressDialog(ctx);
+            progress.setMessage("Connecting...");
+            progress.setCancelable(false);
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            if (!isInternetAvailable(ctx)) {
+                return "?";
+            }
+            HttpRequest request;
+            try {
+                progress.setMessage("Logging...");
+                request = HttpRequest.get(Config.reghost, true, "is_fact",isFaculty ? "1" : "0",(isFaculty) ? "fac_id" : "en_no",strings[0],"password",strings[1])
+                        .followRedirects(true).connectTimeout(6000);
+            } catch (HttpRequest.HttpRequestException e) {
+                return "?";
+            }
+            if (request.ok()) {
+                return request.body();
+            }
+            return "!";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progress.dismiss();
+            if(s.equals("?") || s.equals("!")){
+                Toast.makeText(LoginActivity.this,"Error To Write Data", Toast.LENGTH_SHORT).show();
+            } else {
+                if(s.equals("Done")) {
+                    Intent go = new Intent(LoginActivity.this, MainActivity.class);
+                    go.putExtra(Config.eKey, pref.getString(Config.eKey));
+                    go.putExtra(Config.pKey, pref.getString(Config.pKey));
+                    Prefs.with(LoginActivity.this).writeBoolean(Config.isLogged,true);
+                    startActivity(go);
+                    finish();
+                } else {
+                    pref.remove(Config.eKey);
+                    pref.remove(Config.pKey);
+                    Toast.makeText(LoginActivity.this,"Wrong Data Entered", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+
+        private boolean isInternetAvailable(Context ctx) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
     }
 }
