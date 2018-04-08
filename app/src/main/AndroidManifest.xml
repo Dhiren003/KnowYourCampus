@@ -40,6 +40,8 @@
 
         <activity android:name=".ForgotPass" />
 
+        <activity android:name=".Feedback" />
+
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

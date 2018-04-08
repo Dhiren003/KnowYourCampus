@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity
             intent3.putExtra("android.intent.extra.TEXT", string);
             startActivity(Intent.createChooser(intent3, "Share"));
         } else if (id == R.id.nav_feedback) {
-
+            startActivity(new Intent(MainActivity.this,Feedback.class));
         } else if(id == R.id.nav_logout) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
             alertDialogBuilder.setTitle("LogOut");
@@ -154,8 +154,8 @@ public class MainActivity extends AppCompatActivity
         android.widget.TextView tv = (android.widget.TextView) headerView.findViewById(R.id.tv);
         android.widget.TextView pen = (android.widget.TextView) headerView.findViewById(R.id.pen);
         try {
-            tv.setText(uname);
-            pen.setText(eno);
+            tv.setText(uname.trim());
+            pen.setText(eno.trim());
         } catch (Exception e) {
             e.printStackTrace();
         }
